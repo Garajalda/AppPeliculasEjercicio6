@@ -11,7 +11,7 @@ public class Pelicula implements Serializable {
 
 
 
-    //String sinopsis;
+    String sinopsis;
     String sala;
     String idYoutube;
         int clasi, portada, duracion;
