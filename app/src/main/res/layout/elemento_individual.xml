@@ -9,45 +9,58 @@
 
     <ImageView
         android:id="@+id/imagePortada"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="123dp"
+        android:layout_height="175dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
         android:adjustViewBounds="true"
-    android:scaleType="center"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
+
     <TextView
-        android:id="@+id/textViewTitulo"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewDirector"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewYear"
+        app:layout_constraintEnd_toEndOf="@+id/imagePortada"
+        app:layout_constraintStart_toStartOf="@+id/imagePortada" />
+
+    <TextView
+        android:id="@+id/textViewTitulo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/textViewDirector"
-        app:layout_constraintStart_toStartOf="@id/imagePortada" />
-
-    <TextView
-        android:id="@+id/textViewDirector"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="4dp"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewYear"
-        app:layout_constraintStart_toStartOf="@id/imagePortada" />
+        app:layout_constraintEnd_toEndOf="@+id/imagePortada"
+        app:layout_constraintStart_toStartOf="@+id/imagePortada" />
 
     <TextView
         android:id="@+id/textViewYear"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginBottom="8dp"
         android:textColor="#FF0000"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/imagePortada"
-        app:layout_constraintStart_toStartOf="@id/imagePortada" />
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imagePortada"
+        app:layout_constraintStart_toStartOf="@+id/imagePortada" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
