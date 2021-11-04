@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imagePortada"
-        android:layout_width="198dp"
-        android:layout_height="257dp"
+        android:layout_width="128dp"
+        android:layout_height="167dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"

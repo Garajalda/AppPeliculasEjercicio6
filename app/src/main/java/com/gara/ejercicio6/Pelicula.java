@@ -6,12 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Pelicula implements Serializable {
-        String titulo;
+    String titulo;
     String director;
-
-
-
-    //String sinopsis;
+    String sinopsis;
     String sala;
     String idYoutube;
         int clasi, portada, duracion;
@@ -55,6 +52,7 @@ public class Pelicula implements Serializable {
         public void setFavorita(Boolean favorita) {
             this.favorita=favorita;
         }
+        public void setFavorita(boolean favorita){ this.favorita = favorita; }
         public Date getFecha() {
             return fecha;
         }
@@ -63,5 +61,12 @@ public class Pelicula implements Serializable {
         }
         public int getPortada() {
             return portada;
+        }
+
+        public void setSinopsis(String sinopsis){
+            this.sinopsis = sinopsis;
+        }
+        public String getSinopsis(){
+            return sinopsis;
         }
 }

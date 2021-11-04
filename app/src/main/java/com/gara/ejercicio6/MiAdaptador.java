@@ -1,10 +1,12 @@
 package com.gara.ejercicio6;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,11 +15,15 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder>{
+public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> implements View.OnClickListener{
     ArrayList<Pelicula> peliculas;
+    int selectedPos = RecyclerView.NO_POSITION;
+    MainActivity principal = new MainActivity();
 
     public MiAdaptador(ArrayList<Pelicula> peliculas){
+
         this.peliculas = peliculas;
+
     }
 
     @NonNull
@@ -25,6 +31,7 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder>{
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View elemento = LayoutInflater.from(parent.getContext()).inflate(R.layout.elemento_individual,parent,false);
         MyViewHolder mvh = new MyViewHolder(elemento);
+        elemento.setOnClickListener(this);
         return mvh;
     }
 
@@ -35,11 +42,21 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder>{
         holder.year.setText(pelis.getFecha()+"");
         holder.director.setText(pelis.getDirector());
         holder.portada.setImageResource(pelis.getPortada());
+
     }
 
     @Override
     public int getItemCount() {
         return this.peliculas.size();
+    }
+
+    private View.OnClickListener listener;
+    public void  setOnClickListener(View.OnClickListener listener){
+        this.listener=listener;
+    }
+    @Override
+    public void onClick(View view) {
+        if(listener != null) listener.onClick(view);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -53,6 +70,33 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder>{
             this.director = itemView.findViewById(R.id.textViewDirector);
             this.year = itemView.findViewById(R.id.textViewYear);
             this.portada = itemView.findViewById(R.id.imagePortada);
+
+            /*itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setSelectedPos(getAdapterPosition());
+                    if(selectedPos > RecyclerView.NO_POSITION){
+                        //Toast.makeText(view.getContext(),peliculas.get(selectedPos).titulo,Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+
+                    }
+                }
+            });*/
+        }
+    }
+
+    public int getSelectedPos(){
+        return selectedPos;
+    }
+
+    public void setSelectedPos(int nuevaPos){
+        if(nuevaPos == this.selectedPos){
+            notifyItemChanged(this.selectedPos);
+            this.selectedPos=RecyclerView.NO_POSITION;
+        }else{
+            if(this.selectedPos >= 0) notifyItemChanged(this.selectedPos);
+            this.selectedPos = nuevaPos;
+            notifyItemChanged(this.selectedPos);
         }
     }
 }
