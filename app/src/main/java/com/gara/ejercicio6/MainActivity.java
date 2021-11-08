@@ -3,16 +3,12 @@ package com.gara.ejercicio6;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.icu.text.IDNA;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -268,13 +264,15 @@ public class MainActivity extends AppCompatActivity {
     }
     RecyclerView rv;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final MiAdaptador miAdaptador=new MiAdaptador(rellenaPeliculas());
         rv=findViewById(R.id.mi_recycler_view);
-
+        final Button btnBarShadow = findViewById(R.id.barShadow);
+        final Button btnBarShow = findViewById(R.id.showBar);
         GridLayoutManager miLayoutManager =new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         rv.setLayoutManager(miLayoutManager);
         rv.setAdapter(miAdaptador);
@@ -317,6 +315,32 @@ public class MainActivity extends AppCompatActivity {
         };
         miAdaptador.setOnClickListener(listener);
 
+
+        btnBarShow.setVisibility(View.INVISIBLE);
+
+        //ocultar action bar
+        btnBarShadow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportActionBar().hide();
+
+                btnBarShadow.setVisibility(View.INVISIBLE);
+                btnBarShow.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        //mostrar
+
+        btnBarShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportActionBar().show();
+                btnBarShow.setVisibility(View.INVISIBLE);
+                btnBarShadow.setVisibility(View.VISIBLE);
+
+            }
+        });
 
 
     }
