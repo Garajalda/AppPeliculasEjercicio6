@@ -1,5 +1,6 @@
 package com.gara.ejercicio6;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -7,8 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -265,14 +270,20 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rv;
 
 
+    //muestra el menu que cree
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu,menu);
+        return true;
+    }
+    //obtengo la funcion onclick para los item q estableci en en menu.xml
+
+
+
+    public void menuEditar(MenuItem item){
+        //Toast.makeText(this,"listado",Toast.LENGTH_SHORT).show();
         final MiAdaptador miAdaptador=new MiAdaptador(rellenaPeliculas());
-        rv=findViewById(R.id.mi_recycler_view);
-        final Button btnBarShadow = findViewById(R.id.barShadow);
-        final Button btnBarShow = findViewById(R.id.showBar);
         GridLayoutManager miLayoutManager =new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         rv.setLayoutManager(miLayoutManager);
         rv.setAdapter(miAdaptador);
@@ -314,6 +325,17 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         miAdaptador.setOnClickListener(listener);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        rv=findViewById(R.id.mi_recycler_view);
+        final Button btnBarShadow = findViewById(R.id.barShadow);
+        final Button btnBarShow = findViewById(R.id.showBar);
+
+
 
 
         btnBarShow.setVisibility(View.INVISIBLE);
