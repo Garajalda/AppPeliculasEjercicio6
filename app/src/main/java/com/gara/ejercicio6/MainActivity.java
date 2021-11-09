@@ -2,6 +2,7 @@ package com.gara.ejercicio6;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -270,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rv;
 
 
+
     //muestra el menu que cree
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -280,31 +282,39 @@ public class MainActivity extends AppCompatActivity {
     //obtengo la funcion onclick para los item q estableci en en menu.xml
 
 
+    public void listadoCompleto(MenuItem item){
 
-    public void menuEditar(MenuItem item){
-        //Toast.makeText(this,"listado",Toast.LENGTH_SHORT).show();
+        if(!item.isChecked()){
+            //item.setIcon("");
+            muestraPeliculasCompleto();
+            item.setChecked(true);
+        }else{
+            muestraPeliculas();
+            item.setChecked(false);
+
+        }
+
+
+
+
+    }
+
+
+    void muestraPeliculasCompleto(){
+        rv =findViewById(R.id.mi_recycler_view);
         final MiAdaptador miAdaptador=new MiAdaptador(rellenaPeliculas());
-        GridLayoutManager miLayoutManager =new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager miLayoutManager =new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
         rv.setLayoutManager(miLayoutManager);
         rv.setAdapter(miAdaptador);
         rv.setItemAnimator(new DefaultItemAnimator());
 
+        //pulsar pelicula y salta a otra activity
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int pos=rv.getChildAdapterPosition(view);
                 miAdaptador.setSelectedPos(pos);
                 if(miAdaptador.getSelectedPos()>= 0){
-                    //Toast.makeText(MainActivity.this, "Pos"+pos+"\n" + rellenaPeliculas().get(pos).titulo,Toast.LENGTH_SHORT).show();
-                    //ENVIO DATOS DE PELICULA DESDE EL MAIN A INFOPELICULAS
-                    /*  String titulo;
-                        String director;
-                        String sinopsis;
-                        String sala;
-                        int clasi, portada, duracion;
-                        Date fecha;
-                        boolean favorita;
-                        */
 
                     Intent intent = new Intent(MainActivity.this, InfoPeliculas.class);
                     intent.putExtra("TITULO",rellenaPeliculas().get(pos).titulo+"");
@@ -318,48 +328,60 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("DURACION",rellenaPeliculas().get(pos).duracion);
                     intent.putExtra("IDYOUTUBE",rellenaPeliculas().get(pos).idYoutube+"");
 
-
-
                     startActivity(intent);
+
                 }
             }
         };
         miAdaptador.setOnClickListener(listener);
     }
 
+    void muestraPeliculas(){
+        //peliculas caratula normal sin información
+        rv =findViewById(R.id.mi_recycler_view);
+        final MiAdaptador miAdaptador=new MiAdaptador(rellenaPeliculas());
+        GridLayoutManager miLayoutManager =new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
+        rv.setLayoutManager(miLayoutManager);
+        rv.setAdapter(miAdaptador);
+        rv.setItemAnimator(new DefaultItemAnimator());
+
+        //pulsar pelicula
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos=rv.getChildAdapterPosition(view);
+                miAdaptador.setSelectedPos(pos);
+                if(miAdaptador.getSelectedPos()>= 0){
+                    getSupportActionBar().setTitle(rellenaPeliculas().get(pos).titulo);
+                }
+            }
+        };
+        miAdaptador.setOnClickListener(listener);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        rv=findViewById(R.id.mi_recycler_view);
-        final Button btnBarShadow = findViewById(R.id.barShadow);
+
         final Button btnBarShow = findViewById(R.id.showBar);
 
 
+        //peliculas caratula normal sin información
 
-
-        btnBarShow.setVisibility(View.INVISIBLE);
-
-        //ocultar action bar
-        btnBarShadow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportActionBar().hide();
-
-                btnBarShadow.setVisibility(View.INVISIBLE);
-                btnBarShow.setVisibility(View.VISIBLE);
-
-            }
-        });
+        muestraPeliculas();
 
         //mostrar
 
         btnBarShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportActionBar().show();
-                btnBarShow.setVisibility(View.INVISIBLE);
-                btnBarShadow.setVisibility(View.VISIBLE);
+                if(getSupportActionBar().isShowing()){
+                    getSupportActionBar().hide();
+                }else{
+                    getSupportActionBar().show();
+                }
 
             }
         });
