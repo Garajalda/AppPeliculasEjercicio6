@@ -15,15 +15,12 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> implements View.OnClickListener{
+public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder>{
     ArrayList<Pelicula> peliculas;
     int selectedPos = RecyclerView.NO_POSITION;
-    MainActivity principal = new MainActivity();
 
     public MiAdaptador(ArrayList<Pelicula> peliculas){
-
         this.peliculas = peliculas;
-
     }
 
     @NonNull
@@ -31,15 +28,16 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View elemento = LayoutInflater.from(parent.getContext()).inflate(R.layout.elemento_individual,parent,false);
         MyViewHolder mvh = new MyViewHolder(elemento);
-        elemento.setOnClickListener(this);
         return mvh;
     }
+
+
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Pelicula pelis = this.peliculas.get(position);
         holder.titulo.setText(pelis.titulo);
-        holder.year.setText(pelis.getFecha()+"");
+        holder.clasificacion.setImageResource(pelis.getClasi());
         holder.director.setText(pelis.getDirector());
         holder.portada.setImageResource(pelis.getPortada());
 
@@ -54,34 +52,19 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> 
     public void  setOnClickListener(View.OnClickListener listener){
         this.listener=listener;
     }
-    @Override
-    public void onClick(View view) {
-        if(listener != null) listener.onClick(view);
-    }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView titulo;
         private TextView director;
-        private TextView year;
+        ImageView clasificacion;
         ImageView portada;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             this.titulo = itemView.findViewById(R.id.textViewTitulo);
             this.director = itemView.findViewById(R.id.textViewDirector);
-            this.year = itemView.findViewById(R.id.textViewYear);
+            this.clasificacion = itemView.findViewById(R.id.imageView);
             this.portada = itemView.findViewById(R.id.imagePortada);
-
-            /*itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    setSelectedPos(getAdapterPosition());
-                    if(selectedPos > RecyclerView.NO_POSITION){
-                        //Toast.makeText(view.getContext(),peliculas.get(selectedPos).titulo,Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent();
-
-                    }
-                }
-            });*/
         }
     }
 

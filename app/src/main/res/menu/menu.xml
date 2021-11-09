@@ -4,21 +4,21 @@
     <item
         android:id="@+id/listadoCompleto"
         android:checkable="true"
-        android:icon="@android:drawable/arrow_down_float"
+        android:icon="@drawable/noexpandido"
         android:onClick="listadoCompleto"
-        android:title="Listado Completo"
+        android:title="@string/listado_completo"
         app:showAsAction="always">
 
     </item>
 
     <item
         android:id="@+id/listadoFavoritos"
-        android:icon="@android:drawable/star_on"
-        android:title="Listado Favoritos"
+        android:icon="@drawable/likeicon"
+        android:title="@string/listado_favoritos"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/anhadirPeliculas"
-        android:icon="@android:drawable/ic_menu_add"
-        android:title="Añadir peliculas"
+        android:icon="@drawable/addicon"
+        android:title="@string/a_adir_peliculas"
         app:showAsAction="ifRoom" />
 </menu>

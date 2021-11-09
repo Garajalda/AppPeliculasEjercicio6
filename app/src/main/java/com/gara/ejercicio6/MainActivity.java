@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -285,27 +286,25 @@ public class MainActivity extends AppCompatActivity {
     public void listadoCompleto(MenuItem item){
 
         if(!item.isChecked()){
-            //item.setIcon("");
+            item.setIcon(R.drawable.expandido);
             muestraPeliculasCompleto();
             item.setChecked(true);
         }else{
+            item.setIcon(R.drawable.noexpandido);
             muestraPeliculas();
             item.setChecked(false);
 
         }
-
-
-
 
     }
 
 
     void muestraPeliculasCompleto(){
         rv =findViewById(R.id.mi_recycler_view);
-        final MiAdaptador miAdaptador=new MiAdaptador(rellenaPeliculas());
+        final MiAdaptador2 miAdaptador2=new MiAdaptador2(rellenaPeliculas());
         GridLayoutManager miLayoutManager =new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
         rv.setLayoutManager(miLayoutManager);
-        rv.setAdapter(miAdaptador);
+        rv.setAdapter(miAdaptador2);
         rv.setItemAnimator(new DefaultItemAnimator());
 
         //pulsar pelicula y salta a otra activity
@@ -313,8 +312,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int pos=rv.getChildAdapterPosition(view);
-                miAdaptador.setSelectedPos(pos);
-                if(miAdaptador.getSelectedPos()>= 0){
+                miAdaptador2.setSelectedPos(pos);
+                if(miAdaptador2.getSelectedPos()>= 0){
 
                     Intent intent = new Intent(MainActivity.this, InfoPeliculas.class);
                     intent.putExtra("TITULO",rellenaPeliculas().get(pos).titulo+"");
@@ -333,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        miAdaptador.setOnClickListener(listener);
+        miAdaptador2.setOnClickListener(listener);
     }
 
     void muestraPeliculas(){
@@ -344,19 +343,6 @@ public class MainActivity extends AppCompatActivity {
         rv.setLayoutManager(miLayoutManager);
         rv.setAdapter(miAdaptador);
         rv.setItemAnimator(new DefaultItemAnimator());
-
-        //pulsar pelicula
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int pos=rv.getChildAdapterPosition(view);
-                miAdaptador.setSelectedPos(pos);
-                if(miAdaptador.getSelectedPos()>= 0){
-                    getSupportActionBar().setTitle(rellenaPeliculas().get(pos).titulo);
-                }
-            }
-        };
-        miAdaptador.setOnClickListener(listener);
     }
 
 
@@ -365,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button btnBarShow = findViewById(R.id.showBar);
+        final ImageButton btnBarShow = findViewById(R.id.showBar);
 
 
         //peliculas caratula normal sin información
@@ -377,12 +363,14 @@ public class MainActivity extends AppCompatActivity {
         btnBarShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(getSupportActionBar().isShowing()){
                     getSupportActionBar().hide();
+                    btnBarShow.setImageResource(R.drawable.close_fullscreen);
                 }else{
+                    btnBarShow.setImageResource(R.drawable.open_fullscreen);
                     getSupportActionBar().show();
                 }
-
             }
         });
 
