@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
         menuInflater.inflate(R.menu.menu,menu);
         return true;
     }
-    //obtengo la funcion onclick para los item q estableci en en menu.xml
+    //odbtengo la funcion onclick para los item q estableci en en menu.xml
 
 
     public void listadoCompleto(MenuItem item){
