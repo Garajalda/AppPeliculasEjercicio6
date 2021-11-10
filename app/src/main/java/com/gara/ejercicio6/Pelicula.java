@@ -4,8 +4,10 @@ package com.gara.ejercicio6;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Pelicula implements Serializable {
+
     String titulo;
     String director;
     String sinopsis;
@@ -69,4 +71,9 @@ public class Pelicula implements Serializable {
         public String getSinopsis(){
             return sinopsis;
         }
+
+    @Override
+    public String toString() {
+        return titulo;
+    }
 }

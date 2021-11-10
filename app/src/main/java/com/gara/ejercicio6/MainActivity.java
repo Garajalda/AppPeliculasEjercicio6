@@ -285,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void listadoCompleto(MenuItem item){
 
+
         if(!item.isChecked()){
             item.setIcon(R.drawable.expandido);
             muestraPeliculasCompleto();
@@ -295,6 +296,18 @@ public class MainActivity extends AppCompatActivity {
             item.setChecked(false);
 
         }
+
+
+
+    }
+
+
+
+    //listar favoritos
+    public void listadoFavoritos(MenuItem item){
+        //Toast.makeText(this, "pulse mg", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this,ListaMegusta.class);
+        startActivity(intent);
 
     }
 
@@ -335,6 +348,8 @@ public class MainActivity extends AppCompatActivity {
         miAdaptador2.setOnClickListener(listener);
     }
 
+
+
     void muestraPeliculas(){
         //peliculas caratula normal sin información
         rv =findViewById(R.id.mi_recycler_view);
@@ -343,6 +358,18 @@ public class MainActivity extends AppCompatActivity {
         rv.setLayoutManager(miLayoutManager);
         rv.setAdapter(miAdaptador);
         rv.setItemAnimator(new DefaultItemAnimator());
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos = rv.getChildAdapterPosition(view);
+                miAdaptador.setSelectedPos(pos);
+                if (miAdaptador.getSelectedPos() >= 0) {
+                    getSupportActionBar().setTitle(rellenaPeliculas().get(pos).titulo);
+                }
+            }
+        };
+        miAdaptador.setOnClickListener(listener);
     }
 
 
@@ -353,6 +380,8 @@ public class MainActivity extends AppCompatActivity {
 
         final ImageButton btnBarShow = findViewById(R.id.showBar);
 
+        Datos datos = Datos.getInstance();
+        datos.putExtra("peliculas",rellenaPeliculas());
 
         //peliculas caratula normal sin información
 

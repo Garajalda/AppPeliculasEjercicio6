@@ -15,7 +15,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder>{
+public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> implements View.OnClickListener{
     ArrayList<Pelicula> peliculas;
     int selectedPos = RecyclerView.NO_POSITION;
 
@@ -28,8 +28,11 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder>{
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View elemento = LayoutInflater.from(parent.getContext()).inflate(R.layout.elemento_individual,parent,false);
         MyViewHolder mvh = new MyViewHolder(elemento);
+        elemento.setOnClickListener(this);
         return mvh;
     }
+
+
 
 
 
@@ -41,7 +44,10 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder>{
         holder.director.setText(pelis.getDirector());
         holder.portada.setImageResource(pelis.getPortada());
 
+
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -51,6 +57,13 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder>{
     private View.OnClickListener listener;
     public void  setOnClickListener(View.OnClickListener listener){
         this.listener=listener;
+    }
+
+
+
+    @Override
+    public void onClick(View view) {
+        if(listener!=null) listener.onClick(view);
     }
 
 
