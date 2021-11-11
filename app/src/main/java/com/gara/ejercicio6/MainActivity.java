@@ -1,5 +1,10 @@
 package com.gara.ejercicio6;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         cal.set(1995,1,2);
         Pelicula ia=new Pelicula("IA","Spielberg",140,cal.getTime(),"Travesia",R.drawable.r,R.drawable.ia );
-
+        ia.setFavorita(true);
         ia.setIdYoutube("vN_Hx_It3r0");
         peliculas.add(ia);
         ia.setSinopsis("A mediados del siglo XXI, el calentamiento global provocó que las capas de hielo de los polos se derritieran, inundaran las costas y se redujera " +
@@ -269,9 +274,10 @@ public class MainActivity extends AppCompatActivity {
         peliculas.add(martian);
         return peliculas;
     }
+
+
+
     RecyclerView rv;
-
-
 
     //muestra el menu que cree
     @Override
@@ -307,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
     public void listadoFavoritos(MenuItem item){
         //Toast.makeText(this, "pulse mg", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(MainActivity.this,ListaMegusta.class);
-        startActivity(intent);
+        peliculasNoMg.launch(intent);
 
     }
 
@@ -372,6 +378,26 @@ public class MainActivity extends AppCompatActivity {
         miAdaptador.setOnClickListener(listener);
     }
 
+    //devolucion de mg
+    ActivityResultLauncher<Intent> peliculasNoMg = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode() == RESULT_OK){
+                Intent intent = result.getData();
+                ArrayList<Pelicula> peliculasnofavoritas = (ArrayList<Pelicula>)intent.getSerializableExtra("DESMARCADO");
+
+                //Toast.makeText(MainActivity.this, peliculasnofavoritas.get(0).titulo, Toast.LENGTH_SHORT).show();
+                for(int i = 0; i < peliculasnofavoritas.size(); i++){
+                    boolean nofav = peliculasnofavoritas.get(i).getFavorita();
+                    for(int j = 0; j < rellenaPeliculas().size(); j++){
+                        rellenaPeliculas().get(i).setFavorita(nofav);
+                    }
+                }
+
+
+            }
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
