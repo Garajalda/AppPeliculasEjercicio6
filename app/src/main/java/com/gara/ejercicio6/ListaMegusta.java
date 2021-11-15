@@ -45,7 +45,7 @@ public class ListaMegusta extends AppCompatActivity {
                 intentFav.putExtra("PELICULAS",peliculasFav);
                 setResult(RESULT_OK,intentFav);
                 finish();
-                onBackPressed();
+                //onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);

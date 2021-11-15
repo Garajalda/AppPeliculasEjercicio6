@@ -331,6 +331,20 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
+
+            }
+        }
+    });
+
+    ArrayList<Pelicula> peliculasAnhade;
+    //devolucion pelicula
+    ActivityResultLauncher<Intent> anhadirPelicula = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode() == RESULT_OK){
+                Intent intent = result.getData();
+                peliculasAnhade = (ArrayList<Pelicula>) intent.getSerializableExtra("PELICULASMAS");
+                peliculas.addAll(peliculasAnhade);
             }
         }
     });
@@ -346,7 +360,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void anhadirPeliculas(MenuItem item){
-
+        Intent intent = new Intent(MainActivity.this,Anhadir_peliculas.class);
+        anhadirPelicula.launch(intent);
     }
 
 
