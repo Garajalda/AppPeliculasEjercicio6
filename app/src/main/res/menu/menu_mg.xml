@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/borrar"
+        android:icon="@drawable/delete_menu"
         android:onClick="clickEliminar"
-        android:icon="@drawable/ic_action_name"
         android:title="borrar"
         app:showAsAction="always" />
 </menu>

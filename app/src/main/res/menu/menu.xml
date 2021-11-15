@@ -13,8 +13,8 @@
 
     <item
         android:id="@+id/listadoFavoritos"
+        android:icon="@drawable/like_menu"
         android:onClick="listadoFavoritos"
-        android:icon="@drawable/likeicon"
         android:title="@string/listado_favoritos"
         app:showAsAction="ifRoom" />
     <item

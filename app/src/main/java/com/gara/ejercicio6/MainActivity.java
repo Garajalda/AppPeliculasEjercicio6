@@ -356,14 +356,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     void muestraPeliculas(){
         //peliculas caratula normal sin información
         rv =findViewById(R.id.mi_recycler_view);
         final MiAdaptador miAdaptador=new MiAdaptador(rellenaPeliculas());
+
         GridLayoutManager miLayoutManager =new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         rv.setLayoutManager(miLayoutManager);
         rv.setAdapter(miAdaptador);
         rv.setItemAnimator(new DefaultItemAnimator());
+
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -372,11 +375,15 @@ public class MainActivity extends AppCompatActivity {
                 miAdaptador.setSelectedPos(pos);
                 if (miAdaptador.getSelectedPos() >= 0) {
                     getSupportActionBar().setTitle(rellenaPeliculas().get(pos).titulo);
+
                 }
             }
         };
         miAdaptador.setOnClickListener(listener);
+
     }
+
+
 
     //devolucion de mg
     ActivityResultLauncher<Intent> peliculasNoMg = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -413,7 +420,12 @@ public class MainActivity extends AppCompatActivity {
 
         muestraPeliculas();
 
+
+
+
+
         //mostrar
+
 
         btnBarShow.setOnClickListener(new View.OnClickListener() {
             @Override

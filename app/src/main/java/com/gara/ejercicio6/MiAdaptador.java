@@ -1,17 +1,14 @@
 package com.gara.ejercicio6;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -27,11 +24,12 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View elemento = LayoutInflater.from(parent.getContext()).inflate(R.layout.elemento_individual,parent,false);
+        ImageButton btnLike = elemento.findViewById(R.id.btnLike1);
         MyViewHolder mvh = new MyViewHolder(elemento);
         elemento.setOnClickListener(this);
+
         return mvh;
     }
-
 
 
 
@@ -43,7 +41,16 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> 
         holder.clasificacion.setImageResource(pelis.getClasi());
         holder.director.setText(pelis.getDirector());
         holder.portada.setImageResource(pelis.getPortada());
+        holder.btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
+
+        if(peliculas.get(position).getFavorita()){
+            holder.btnLike.setImageResource(R.drawable.likered);
+        }
 
     }
 
@@ -64,6 +71,7 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> 
     @Override
     public void onClick(View view) {
         if(listener!=null) listener.onClick(view);
+
     }
 
 
@@ -72,12 +80,16 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> 
         private TextView director;
         ImageView clasificacion;
         ImageView portada;
+        ImageButton btnLike;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             this.titulo = itemView.findViewById(R.id.textViewTitulo);
             this.director = itemView.findViewById(R.id.textViewDirector);
             this.clasificacion = itemView.findViewById(R.id.imageView);
             this.portada = itemView.findViewById(R.id.imagePortada);
+            this.btnLike = itemView.findViewById(R.id.btnLike1);
+
+
         }
     }
 

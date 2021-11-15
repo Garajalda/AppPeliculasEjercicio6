@@ -78,7 +78,7 @@ public class ListaMegusta extends AppCompatActivity {
         lv= findViewById(R.id.peliculasMG);
         lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        adapter = new ArrayAdapter<Pelicula>(this, android.R.layout.simple_list_item_checked,peliculasFav);
+        adapter = new ArrayAdapter<Pelicula>(this, android.R.layout.simple_list_item_multiple_choice,peliculasFav);
         lv.setAdapter(adapter);
 
     }
