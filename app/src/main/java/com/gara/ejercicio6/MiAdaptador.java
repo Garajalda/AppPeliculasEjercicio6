@@ -41,7 +41,12 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> 
         holder.clasificacion.setImageResource(pelis.getClasi());
         holder.director.setText(pelis.getDirector());
         holder.portada.setImageResource(pelis.getPortada());
+        holder.btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
 
         if(peliculas.get(position).getFavorita()){
             holder.btnLike.setImageResource(R.drawable.likered);

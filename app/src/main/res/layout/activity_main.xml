@@ -25,6 +25,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/open_fullscreen" />
-
+    //nose....
+    <include layout="@layout/elemento_individual"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
