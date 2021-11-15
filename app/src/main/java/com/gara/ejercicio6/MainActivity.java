@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
+import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    ArrayList<Pelicula> peliculas = rellenaPeliculas();
+
     public ArrayList<Pelicula> rellenaPeliculas(){
 
         ArrayList<Pelicula> peliculas = new ArrayList<Pelicula>();
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 "Atreides, deberá huir al desierto, donde le esperan múltiples peligros y una última oportunidad de vengarse y volver a su legítimo lugar como gobernante de" +
                 " Arrakis");
         dune.setIdYoutube("KwPTIEWTYEI");
+
         peliculas.add(dune);
 
         cal.set(1972,3,5);
@@ -69,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 "temporal en la narración: el hueso que asciende en el aire, pasa a convertirse en un ingenio espacial que surca el espacio entre la Tierra y la Luna en el " +
                 "año 1999 de nuestra era; se lo ha denominado la «elipsis más larga de la historia del cine» de 4 millones de años.");
         a2001.setIdYoutube("XHjIqQBsPjk");
+        a2001.setFavorita(false);
         peliculas.add(a2001);
 
         cal.set(1984,11,2);
@@ -86,12 +91,12 @@ public class MainActivity extends AppCompatActivity {
                 "rescatan. De repente, Tetsuo empieza a sufrir fuertes dolores de cabeza, la policía aparece de la nada junto con el Doctor Onishi y se llevan a Tetsuo de " +
                 "vuelta al hospital.");
         akira.setIdYoutube("T9WTE3Q2G_Y");
-        akira.setFavorita(true);
+        akira.setFavorita(false);
         peliculas.add(akira);
 
         cal.set(1995,1,2);
         Pelicula ia=new Pelicula("IA","Spielberg",140,cal.getTime(),"Travesia",R.drawable.r,R.drawable.ia );
-        ia.setFavorita(true);
+        ia.setFavorita(false);
         ia.setIdYoutube("vN_Hx_It3r0");
         peliculas.add(ia);
         ia.setSinopsis("A mediados del siglo XXI, el calentamiento global provocó que las capas de hielo de los polos se derritieran, inundaran las costas y se redujera " +
@@ -271,6 +276,7 @@ public class MainActivity extends AppCompatActivity {
         Pelicula martian=new Pelicula("The Martian","Ridley Scotts",151,cal.getTime(),"Gran vía",R.drawable.pg13,R.drawable.martian);
         martian.setSinopsis("Durante una misión a Marte de la nave tripulada Ares III, una fuerte tormenta se desata, por lo que, tras haber dado por desaparecido y muerto al astronauta Mark Watney (Matt Damon), sus compañeros toman la decisión de irse; sin embargo, ha sobrevivido, pero está solo y sin apenas recursos en el planeta. Con muy pocos medios, deberá recurrir a sus conocimientos, su sentido del humor y un gran instinto de supervivencia para lograr sobrevivir y comunicar a la Tierra que todavía está vivo, esperando que acudan en su rescate.");
         martian.setIdYoutube("OS23SmNlE3Y");
+
         peliculas.add(martian);
         return peliculas;
     }
@@ -308,19 +314,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    ArrayList<Pelicula> peliculasFavoritas;
+
+    //devolucion de mg
+    ActivityResultLauncher<Intent> peliculasMg = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode() == RESULT_OK){
+                Intent intent = result.getData();
+                peliculasFavoritas = (ArrayList<Pelicula>) intent.getSerializableExtra("PELICULAS");
+
+                for(int i = 0; i < peliculasFavoritas.size(); i++){
+                    if(peliculas.contains(peliculasFavoritas.get(i).titulo)){
+                        peliculas.get(i).setFavorita(true);
+                    }
+                }
+
+
+            }
+        }
+    });
 
     //listar favoritos
     public void listadoFavoritos(MenuItem item){
         //Toast.makeText(this, "pulse mg", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(MainActivity.this,ListaMegusta.class);
-        peliculasNoMg.launch(intent);
+        peliculasMg.launch(intent);
+
+
+    }
+
+
+    public void anhadirPeliculas(MenuItem item){
 
     }
 
 
     void muestraPeliculasCompleto(){
         rv =findViewById(R.id.mi_recycler_view);
-        final MiAdaptador2 miAdaptador2=new MiAdaptador2(rellenaPeliculas());
+        final MiAdaptador2 miAdaptador2=new MiAdaptador2(peliculas);
         GridLayoutManager miLayoutManager =new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
         rv.setLayoutManager(miLayoutManager);
         rv.setAdapter(miAdaptador2);
@@ -335,16 +367,16 @@ public class MainActivity extends AppCompatActivity {
                 if(miAdaptador2.getSelectedPos()>= 0){
 
                     Intent intent = new Intent(MainActivity.this, InfoPeliculas.class);
-                    intent.putExtra("TITULO",rellenaPeliculas().get(pos).titulo+"");
-                    intent.putExtra("DIRECTOR",rellenaPeliculas().get(pos).getDirector()+"");
-                    intent.putExtra("SINOPSIS",rellenaPeliculas().get(pos).getSinopsis()+"");
-                    intent.putExtra("SALA",rellenaPeliculas().get(pos).sala+"");
-                    intent.putExtra("CLASIFICACION",rellenaPeliculas().get(pos).getClasi());
-                    intent.putExtra("PORTADA",rellenaPeliculas().get(pos).getPortada());
-                    intent.putExtra("FECHA",rellenaPeliculas().get(pos).getFecha()+"");
-                    intent.putExtra("FAV",rellenaPeliculas().get(pos).getFavorita()+"");
-                    intent.putExtra("DURACION",rellenaPeliculas().get(pos).duracion);
-                    intent.putExtra("IDYOUTUBE",rellenaPeliculas().get(pos).idYoutube+"");
+                    intent.putExtra("TITULO",peliculas.get(pos).titulo+"");
+                    intent.putExtra("DIRECTOR",peliculas.get(pos).getDirector()+"");
+                    intent.putExtra("SINOPSIS",peliculas.get(pos).getSinopsis()+"");
+                    intent.putExtra("SALA",peliculas.get(pos).sala+"");
+                    intent.putExtra("CLASIFICACION",peliculas.get(pos).getClasi());
+                    intent.putExtra("PORTADA",peliculas.get(pos).getPortada());
+                    intent.putExtra("FECHA",peliculas.get(pos).getFecha()+"");
+                    intent.putExtra("FAV",peliculas.get(pos).getFavorita()+"");
+                    intent.putExtra("DURACION",peliculas.get(pos).duracion);
+                    intent.putExtra("IDYOUTUBE",peliculas.get(pos).idYoutube+"");
 
                     startActivity(intent);
 
@@ -360,7 +392,7 @@ public class MainActivity extends AppCompatActivity {
     void muestraPeliculas(){
         //peliculas caratula normal sin información
         rv =findViewById(R.id.mi_recycler_view);
-        final MiAdaptador miAdaptador=new MiAdaptador(rellenaPeliculas());
+        final MiAdaptador miAdaptador=new MiAdaptador(peliculas);
 
         GridLayoutManager miLayoutManager =new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         rv.setLayoutManager(miLayoutManager);
@@ -374,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
                 int pos = rv.getChildAdapterPosition(view);
                 miAdaptador.setSelectedPos(pos);
                 if (miAdaptador.getSelectedPos() >= 0) {
-                    getSupportActionBar().setTitle(rellenaPeliculas().get(pos).titulo);
+                    getSupportActionBar().setTitle(peliculas.get(pos).titulo);
 
                 }
             }
@@ -385,26 +417,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    //devolucion de mg
-    ActivityResultLauncher<Intent> peliculasNoMg = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult result) {
-            if(result.getResultCode() == RESULT_OK){
-                Intent intent = result.getData();
-                ArrayList<Pelicula> peliculasnofavoritas = (ArrayList<Pelicula>)intent.getSerializableExtra("DESMARCADO");
 
-                //Toast.makeText(MainActivity.this, peliculasnofavoritas.get(0).titulo, Toast.LENGTH_SHORT).show();
-                for(int i = 0; i < peliculasnofavoritas.size(); i++){
-                    boolean nofav = peliculasnofavoritas.get(i).getFavorita();
-                    for(int j = 0; j < rellenaPeliculas().size(); j++){
-                        rellenaPeliculas().get(i).setFavorita(nofav);
-                    }
-                }
-
-
-            }
-        }
-    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -414,9 +427,11 @@ public class MainActivity extends AppCompatActivity {
         final ImageButton btnBarShow = findViewById(R.id.showBar);
 
         Datos datos = Datos.getInstance();
-        datos.putExtra("peliculas",rellenaPeliculas());
+        datos.putExtra("peliculas",peliculas);
 
         //peliculas caratula normal sin información
+
+
 
         muestraPeliculas();
 

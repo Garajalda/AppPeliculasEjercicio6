@@ -19,6 +19,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/anhadirPeliculas"
+        android:onClick="anhadirPeliculas"
         android:icon="@drawable/addicon"
         android:title="@string/a_adir_peliculas"
         app:showAsAction="ifRoom" />

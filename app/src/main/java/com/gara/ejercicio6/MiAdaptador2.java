@@ -3,6 +3,7 @@ package com.gara.ejercicio6;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,6 +57,13 @@ public class MiAdaptador2 extends RecyclerView.Adapter<MiAdaptador2.MyViewHolder
         holder.sala.setText("Sala: "+pelicula.sala);
         holder.duracion.setText("Duración: "+pelicula.duracion);
         holder.year.setText("Fecha: "+pelicula.getFecha());
+        if(pelicula.getFavorita()){
+            holder.btnLike.setImageResource(R.drawable.likered);
+        }else{
+            holder.btnLike.setImageResource(R.drawable.like_menu);
+        }
+
+
     }
 
 
@@ -80,6 +88,7 @@ public class MiAdaptador2 extends RecyclerView.Adapter<MiAdaptador2.MyViewHolder
         private TextView director;
         private TextView duracion;
         private TextView sala;
+        private ImageButton btnLike;
         ImageView portada;
         public MyViewHolder(View viewElemento){
             super(viewElemento);
@@ -89,6 +98,7 @@ public class MiAdaptador2 extends RecyclerView.Adapter<MiAdaptador2.MyViewHolder
             this.duracion = viewElemento.findViewById(R.id.duracion_2);
             this.sala = viewElemento.findViewById(R.id.sala_2);
             this.portada = viewElemento.findViewById(R.id.portada_2);
+            this.btnLike = viewElemento.findViewById(R.id.btnLike);
 
         }
     }

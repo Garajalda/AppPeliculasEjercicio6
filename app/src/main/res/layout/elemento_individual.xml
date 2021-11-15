@@ -49,16 +49,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
-        android:id="@+id/btnLike1"
-        android:layout_width="30dp"
-        android:layout_height="31dp"
-        android:background="@drawable/likered"
-        android:backgroundTint="#FFFFFF"
-        android:focusableInTouchMode="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

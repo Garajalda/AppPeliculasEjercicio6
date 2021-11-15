@@ -24,7 +24,7 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View elemento = LayoutInflater.from(parent.getContext()).inflate(R.layout.elemento_individual,parent,false);
-        ImageButton btnLike = elemento.findViewById(R.id.btnLike1);
+
         MyViewHolder mvh = new MyViewHolder(elemento);
         elemento.setOnClickListener(this);
 
@@ -41,16 +41,9 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> 
         holder.clasificacion.setImageResource(pelis.getClasi());
         holder.director.setText(pelis.getDirector());
         holder.portada.setImageResource(pelis.getPortada());
-        holder.btnLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
 
-        if(peliculas.get(position).getFavorita()){
-            holder.btnLike.setImageResource(R.drawable.likered);
-        }
+
 
     }
 
@@ -87,7 +80,7 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> 
             this.director = itemView.findViewById(R.id.textViewDirector);
             this.clasificacion = itemView.findViewById(R.id.imageView);
             this.portada = itemView.findViewById(R.id.imagePortada);
-            this.btnLike = itemView.findViewById(R.id.btnLike1);
+
 
 
         }

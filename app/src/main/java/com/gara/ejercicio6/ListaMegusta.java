@@ -24,47 +24,34 @@ public class ListaMegusta extends AppCompatActivity {
     Datos datos = Datos.getInstance();
 
     ArrayList<Pelicula> peliculas = datos.getPelis("peliculas");
+    ArrayList<Pelicula> peliculasFav = new ArrayList<>();
     ArrayAdapter<Pelicula> adapter;
-    ArrayList<Pelicula> peliculasFav;
-    ArrayList<Pelicula> peliculasDesmarcadas;
 
 
-    public void pelisFav(){
-        peliculasFav = new ArrayList<Pelicula>();
-        peliculasDesmarcadas = new ArrayList<>();
-        for(Pelicula peliculas2 : peliculas){
-            if(peliculas2.getFavorita()){
-                peliculasFav.add(peliculas2);
-                peliculasDesmarcadas.add(peliculas2);
-
-            }
-        }
-
-    }
-
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_mg,menu);
         return true;
-    }
+    }*/
 
+    ListView lv;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intentDesFav = new Intent();
-                intentDesFav.putExtra("DESMARCADO",peliculasDesmarcadas);
-                setResult(RESULT_OK,intentDesFav);
-                //onBackPressed();
+                Intent intentFav = new Intent();
+
+                intentFav.putExtra("PELICULAS",peliculasFav);
+                setResult(RESULT_OK,intentFav);
                 finish();
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,31 +60,68 @@ public class ListaMegusta extends AppCompatActivity {
         getSupportActionBar().setTitle("Peliculas favoritas");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        pelisFav();
+
         //listview
         lv= findViewById(R.id.peliculasMG);
+
         lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        adapter = new ArrayAdapter<Pelicula>(this, android.R.layout.simple_list_item_multiple_choice,peliculasFav);
+        adapter = new ArrayAdapter<Pelicula>(this, android.R.layout.simple_list_item_checked,peliculas);
         lv.setAdapter(adapter);
+
+
+
+        for(int i = 0; i < peliculas.size(); i++){
+
+            if(peliculas.get(i).getFavorita()){
+                lv.setItemChecked(i,true);
+
+            }
+
+        }
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(!lv.isItemChecked(i)){
+                    peliculas.get(i).setFavorita(false);
+                }else{
+
+                    peliculas.get(i).setFavorita(true);
+                }
+                for(Pelicula peliculaFav : peliculas){
+                    if(peliculaFav.getFavorita()){
+                        peliculasFav.add(peliculaFav);
+
+
+                    }
+                }
+
+
+
+            }
+        });
 
     }
 
-    public void clickEliminar(MenuItem item){
+
+    /*public void clickEliminar(MenuItem item){
         @SuppressWarnings ("unchecked")
         ArrayAdapter<String> adapter =(ArrayAdapter<String>)lv.getAdapter();
         for (int i = lv.getCount()-1; i >=0; i--){
             if(lv.isItemChecked(i)){
                 //String titulo, String director, int duracion, Date fecha, String sala, int clasi, int portada
 
-                peliculasFav.remove(i);
-                peliculasDesmarcadas.get(i).setFavorita(false);
+                peliculas.remove(i);
+
             }
+
+
         }
 
         lv.getCheckedItemPositions().clear();
         adapter.notifyDataSetChanged();
-    }
+    }*/
 
 
 

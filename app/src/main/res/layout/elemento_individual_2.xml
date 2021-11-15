@@ -79,6 +79,18 @@
         app:layout_constraintStart_toEndOf="@+id/portada_2"
         app:layout_constraintTop_toBottomOf="@+id/sala_2" />
 
+    <ImageButton
+        android:id="@+id/btnLike"
+        android:layout_width="30dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/likered"
+        android:backgroundTint="#FFFFFF"
+        android:focusableInTouchMode="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <View
         android:id="@+id/divider2"
         android:layout_width="0dp"
