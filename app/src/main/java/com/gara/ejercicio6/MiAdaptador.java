@@ -56,6 +56,8 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.MyViewHolder> 
 
 
 
+
+
     @Override
     public int getItemCount() {
         return this.peliculas.size();
