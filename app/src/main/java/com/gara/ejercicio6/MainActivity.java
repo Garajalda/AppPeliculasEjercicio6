@@ -314,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    ArrayList<Pelicula> peliculasFavoritas;
+    ArrayList<Pelicula> peliculasFavoritas = new ArrayList<>();
 
     //devolucion de mg
     ActivityResultLauncher<Intent> peliculasMg = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -332,11 +332,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
             }
         }
     });
 
-    ArrayList<Pelicula> peliculasAnhade;
+    ArrayList<Pelicula> peliculasAnhade = new ArrayList<>();
     //devolucion pelicula
     ActivityResultLauncher<Intent> anhadirPelicula = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
@@ -344,7 +346,10 @@ public class MainActivity extends AppCompatActivity {
             if(result.getResultCode() == RESULT_OK){
                 Intent intent = result.getData();
                 peliculasAnhade = (ArrayList<Pelicula>) intent.getSerializableExtra("PELICULASMAS");
-                peliculas.addAll(peliculasAnhade);
+                for(Pelicula peli : peliculasAnhade){
+                    peli.setFavorita(false);
+                    peliculas.add(peli);
+                }
             }
         }
     });
@@ -353,6 +358,7 @@ public class MainActivity extends AppCompatActivity {
     public void listadoFavoritos(MenuItem item){
         //Toast.makeText(this, "pulse mg", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(MainActivity.this,ListaMegusta.class);
+
         peliculasMg.launch(intent);
 
 

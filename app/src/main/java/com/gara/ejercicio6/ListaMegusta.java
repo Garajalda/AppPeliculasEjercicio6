@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +67,8 @@ public class ListaMegusta extends AppCompatActivity {
 
         lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
+
+
         adapter = new ArrayAdapter<Pelicula>(this, android.R.layout.simple_list_item_checked,peliculas);
         lv.setAdapter(adapter);
 
@@ -89,13 +92,9 @@ public class ListaMegusta extends AppCompatActivity {
 
                     peliculas.get(i).setFavorita(true);
                 }
-                for(Pelicula peliculaFav : peliculas){
-                    if(peliculaFav.getFavorita()){
-                        peliculasFav.add(peliculaFav);
 
-
-                    }
-                }
+                Toast.makeText(getApplicationContext(), i+"", Toast.LENGTH_SHORT).show();
+                peliculasFav.add(peliculas.get(i));
 
 
 

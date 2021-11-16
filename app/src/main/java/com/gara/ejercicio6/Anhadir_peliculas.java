@@ -30,6 +30,7 @@ public class Anhadir_peliculas extends AppCompatActivity {
     ArrayList<Pelicula> peliculasAnhadidas = new ArrayList<>();
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -72,6 +73,7 @@ public class Anhadir_peliculas extends AppCompatActivity {
         int duracionI = Integer.parseInt(duracion.getText()+"");
         Intent intentPeli = new Intent();
         peliculasAnhadidas.add(new Pelicula(tituloS,directorS,duracionI,cal.getTime(),salaCine,clasificacionImagen,R.drawable.sincara));
+
         intentPeli.putExtra("PELICULASMAS",peliculasAnhadidas);
         setResult(RESULT_OK,intentPeli);
         finish();
@@ -126,7 +128,7 @@ public class Anhadir_peliculas extends AppCompatActivity {
            public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
 
                cal.set(i,i1,i2);
-               getSupportActionBar().setTitle(cal.getTime()+"");
+
            }
        });
 
