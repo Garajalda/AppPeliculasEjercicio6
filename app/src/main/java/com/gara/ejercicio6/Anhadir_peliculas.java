@@ -71,12 +71,18 @@ public class Anhadir_peliculas extends AppCompatActivity {
         //duracion
         TextView duracion = findViewById(R.id.editTextDuracion);
         int duracionI = Integer.parseInt(duracion.getText()+"");
-        Intent intentPeli = new Intent();
-        peliculasAnhadidas.add(new Pelicula(tituloS,directorS,duracionI,cal.getTime(),salaCine,clasificacionImagen,R.drawable.sincara));
 
-        intentPeli.putExtra("PELICULASMAS",peliculasAnhadidas);
-        setResult(RESULT_OK,intentPeli);
-        finish();
+        if(!tituloS.equals("") && !directorS.equals("")){
+            Intent intentPeli = new Intent();
+            peliculasAnhadidas.add(new Pelicula(tituloS,directorS,duracionI,cal.getTime(),salaCine,clasificacionImagen,R.drawable.sincara));
+
+            intentPeli.putExtra("PELICULASMAS",peliculasAnhadidas);
+            setResult(RESULT_OK,intentPeli);
+            finish();
+
+        }else{
+            Toast.makeText(this, "Datos no válidos.", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
