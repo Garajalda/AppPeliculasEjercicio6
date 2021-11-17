@@ -76,4 +76,5 @@ public class Pelicula implements Serializable {
     public String toString() {
         return titulo;
     }
+
 }

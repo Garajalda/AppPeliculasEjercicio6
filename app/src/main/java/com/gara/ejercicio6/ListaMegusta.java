@@ -29,13 +29,6 @@ public class ListaMegusta extends AppCompatActivity {
     ArrayAdapter<Pelicula> adapter;
 
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_mg,menu);
-        return true;
-    }*/
-
     ListView lv;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
