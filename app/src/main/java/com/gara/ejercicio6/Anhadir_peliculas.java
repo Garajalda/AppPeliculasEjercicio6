@@ -56,10 +56,9 @@ public class Anhadir_peliculas extends AppCompatActivity {
 
     Calendar cal = Calendar.getInstance();
 
+        final ArrayList<String> salas = new ArrayList<>();
     String salaCine = "";
     int clasificacionImagen = 0;
-
-
 
     public void anhadirPelicula(MenuItem item){
         //titulo
@@ -70,22 +69,31 @@ public class Anhadir_peliculas extends AppCompatActivity {
         String directorS = director.getText()+"";
         //duracion
         TextView duracion = findViewById(R.id.editTextDuracion);
-        int duracionI = Integer.parseInt(duracion.getText()+"");
+        try{
+            int duracionI = Integer.parseInt(duracion.getText()+"");
 
-        if(!tituloS.equals("") && !directorS.equals("")){
-            Intent intentPeli = new Intent();
-            peliculasAnhadidas.add(new Pelicula(tituloS,directorS,duracionI,cal.getTime(),salaCine,clasificacionImagen,R.drawable.sincara));
+            if(!tituloS.equals("") && !directorS.equals("")){
+                Intent intentPeli = new Intent();
 
-            intentPeli.putExtra("PELICULASMAS",peliculasAnhadidas);
-            setResult(RESULT_OK,intentPeli);
-            finish();
+                peliculasAnhadidas.add(new Pelicula(tituloS,directorS,duracionI,cal.getTime(),salaCine,clasificacionImagen,R.drawable.sincara));
 
-        }else{
-            Toast.makeText(this, "Datos no válidos.", Toast.LENGTH_SHORT).show();
+                intentPeli.putExtra("PELICULASMAS",peliculasAnhadidas);
+                setResult(RESULT_OK,intentPeli);
+                finish();
+
+            }else{
+                Toast.makeText(this, "Datos no validos.", Toast.LENGTH_SHORT).show();
+            }
+        }catch (NumberFormatException e){
+            Toast.makeText(this, "Numero no valido", Toast.LENGTH_SHORT).show();
         }
 
 
+
     }
+
+
+
 
 
     @Override
@@ -96,7 +104,6 @@ public class Anhadir_peliculas extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //spinner
-        final ArrayList<String> salas = new ArrayList<>();
         for(Pelicula sala : peliculas){
             if(!salas.contains(sala.sala)){
                 salas.add(sala.sala);
@@ -116,6 +123,8 @@ public class Anhadir_peliculas extends AppCompatActivity {
                 if(!muestra) muestra = true;
                 else{
                    salaCine = salas.get(i)+"";
+
+
                 }
 
             }
@@ -176,4 +185,6 @@ public class Anhadir_peliculas extends AppCompatActivity {
 
 
     }
+
+
 }
